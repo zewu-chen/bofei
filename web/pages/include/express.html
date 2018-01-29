@@ -1,0 +1,113 @@
+<div ng-controller="expressCtrl" class="express_content" ng-render-finish="express.update()">
+    <!-- 操作按钮 -->
+    <div class="row">
+        <div class="col-sm-8">
+            <button type="button" class="btn btn-primary" data-toggle="modal" ng-click="express.add()">新增</button>
+            <button type="button" class="btn btn-warning" ng-click="express.edit()">修改</button>
+            <button type="button" class="btn btn-danger" ng-click="express.delete()">删除</button>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group input-group">
+                <input ng-model="express.searchWord" ng-keypress="$event.keyCode === 13 && express.update()" type="text" class="form-control" placeholder="输入关键字...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="express.update()">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- 表白产品管理表格 -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    表白产品管理
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>名称</th>
+                                    <th>图片</th>
+                                    <th>描述</th>
+                                    <th>修改日期</th>
+                                    <th>修改者</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in express.data" ng-click="express.itemCheck(item.id)" ng-class="{'badWordChecked': item.id == express.checkedId}">
+                                    <td>{{(paginationConf.currentPage-1)*paginationConf.itemsPerPage + $index + 1}}</td>
+                                    <td>{{item.name}}</td>
+                                    <td>
+                                        <div style="width:50px; height:50px;">
+                                            <img style="height:100%;" ng-src="{{item.icon}}">
+                                        </div>
+                                    </td>
+                                    <td>{{item.defaultText}}</td>
+                                    <td>{{item.editDate}}</td>
+                                    <td>{{item.editor}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- .panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+    <!-- 分页 -->
+    <div class="row">
+        <div class="col-lg-12">
+            <tm-pagination conf="paginationConf"></tm-pagination>
+        </div>
+    </div>
+    <!-- 按钮触发模态框 -->
+    <!-- 新增表白模态框（Modal） -->
+    <div class="modal fade" id="addExpress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content expressModal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">新增表白</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label">名称：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" ng-model="form.name" class="form-control" id="name" placeholder="请输入名称">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="defaultText" class="col-sm-2 control-label">描述：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" ng-model="form.defaultText" class="form-control" id="defaultText" placeholder="请输入描述">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="icon" class="col-sm-2 control-label">图片：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" ng-model="form.icon" class="form-control" id="icon" placeholder="请输入图片地址">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="express.addOrEdit()">提交</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+</div>

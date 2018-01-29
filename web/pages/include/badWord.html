@@ -1,0 +1,80 @@
+<div ng-controller="badWordCtrl" class="bad_word_content" ng-render-finish="badWord.update()">
+    <!-- 操作按钮 -->
+    <div class="row">
+        <div class="col-sm-8">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBadWord">新增</button>
+            <!-- <button type="button" class="btn btn-warning">修改</button> -->
+            <button type="button" class="btn btn-danger" ng-click="badWord.deleteBadWord()">删除</button>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group input-group">
+                <input ng-model="badWord.searchWord" ng-keypress="$event.keyCode === 13 && badWord.update()" type="text" class="form-control"
+                    placeholder="输入关键字...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="badWord.update()">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- 敏感词表格 -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    敏感词
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="col-lg-2" ng-repeat="item in badWord.data">
+                        <div class="badWord_panel" ng-class="{'badWordChecked': item.id == badWord.checkedId}" ng-click="badWord.itemCheck(item.id)">
+                            <span title="{{item.word}}" ng-bind="item.word"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- .panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+    <!-- 分页 -->
+    <!-- 分页 -->
+    <div class="row">
+        <div class="col-lg-12">
+            <tm-pagination conf="paginationConf"></tm-pagination>
+        </div>
+    </div>
+
+
+
+    <!-- 按钮触发模态框 -->
+    <!-- 新增敏感词模态框（Modal） -->
+    <div class="modal fade" id="addBadWord" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content addBadWordModal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">新增敏感词</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>敏感词</label>
+                                <input class="form-control" ng-model="badWord.newBadWord" placeholder="请输入敏感词...">
+                                <p class="help-block">批量增加用英文逗号分隔</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="badWord.addBadWord()">提交</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+</div>
